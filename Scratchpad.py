@@ -3,27 +3,25 @@ from sublime import packages_path, run_command, ENCODED_POSITION
 from time import strftime
 from os.path import isfile
 
-headerText = """
-    _____                _       _                     _
-   /  ___|              | |     | |                   | |
-   \ `--.  ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
-    `--. \/ __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
-   /\__/ / (__| | | (_| | || (__| | | | |_) | (_| | (_| |
-   \____/ \___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
-                                      | |
-                                      |_|
-
+headerText = """     _____                _       _                     _
+    /  ___|              | |     | |                   | |
+    \ `--.  ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
+     `--. \/ __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
+    /\__/ / (__| | | (_| | || (__| | | | |_) | (_| | (_| |
+    \____/ \___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
+                                       | |
+                                       |_|
 """
 
 class OpenScratchpadCommand(WindowCommand):
   def run(self):
-    scratchpadFile = packages_path()[:-8]+'scratchpad.txt'
+    scratchpadFile = packages_path()[:-8]+'scratchpad.md'
     checkAndFillEmpty(scratchpadFile)
     self.window.open_file(scratchpadFile)
 
 class ScratchpadCommand(WindowCommand):
   def run(self):
-    scratchpadFile = packages_path()[:-8]+'scratchpad.txt'
+    scratchpadFile = packages_path()[:-8]+'scratchpad.md'
     global headerText
     checkAndFillEmpty(scratchpadFile)
     count = putTimeStamp(scratchpadFile)
@@ -36,7 +34,7 @@ def checkAndFillEmpty(scratchpadFile):
       scratchFile.write(headerText)
 
 def putTimeStamp(scratchpadFile):
-  timeStamp = "\n\n" + strftime("%c") + " : " + "\n" +"========================" + "\n"
+  timeStamp = "\n# " + strftime("%c") + "\n"
   with open(scratchpadFile, "a") as scratchFile:
       scratchFile.write(timeStamp)
   with open(scratchpadFile) as scratchFile:
